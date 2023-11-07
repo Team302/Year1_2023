@@ -5,9 +5,11 @@
 #pragma once
 
 #include <string>
-
+#include <ctre/phoenix/motorcontrol/can/TalonFX.h>
 #include <frc/TimedRobot.h>
 #include <frc/smartdashboard/SendableChooser.h>
+
+using namespace ctre::phoenix::motorcontrol::can;
 
 class Robot : public frc::TimedRobot {
  public:
@@ -29,4 +31,16 @@ class Robot : public frc::TimedRobot {
   const std::string kAutoNameDefault = "Default";
   const std::string kAutoNameCustom = "My Auto";
   std::string m_autoSelected;
+
+  TalonFX* m_motor;
+
+  int m_robotInitOutput = 1;
+  int m_robotPerOutput = 1;
+  
+  int r_TelInitStart = 1;
+  int r_TelPeriodicLoop = 1;
+
+  double m_speed = 0.0; 
+  int m_counter = 0;
+
 };

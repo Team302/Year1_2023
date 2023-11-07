@@ -3,14 +3,25 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include "Robot.h"
-
+#include <iostream>
 #include <fmt/core.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 
 void Robot::RobotInit() {
+
+std::cout << "Hello" << std::endl;
+
   m_chooser.SetDefaultOption(kAutoNameDefault, kAutoNameDefault);
   m_chooser.AddOption(kAutoNameCustom, kAutoNameCustom);
   frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
+  
+  
+  m_motor = new TalonFX(2, "roborio");  //2 is motor id and roborio is can-bus identification
+  
+
+
+
+
 }
 
 /**
@@ -21,7 +32,12 @@ void Robot::RobotInit() {
  * <p> This runs after the mode specific periodic functions, but before
  * LiveWindow and SmartDashboard integrated updating.
  */
-void Robot::RobotPeriodic() {}
+void Robot::RobotPeriodic() {
+
+  
+  
+
+}
 
 /**
  * This autonomous (along with the chooser code above) shows how to select
@@ -55,9 +71,23 @@ void Robot::AutonomousPeriodic() {
   }
 }
 
-void Robot::TeleopInit() {}
+void Robot::TeleopInit() {
+  std::cout << "Tobot Periodic: " + std::to_string(r_TelInitStart) << std::endl;
+  r_TelInitStart++;
+}
 
-void Robot::TeleopPeriodic() {}
+void Robot::TeleopPeriodic() {
+  m_speed += 0.001;
+
+  if (m_speed > 1.0)
+  {
+    m_speed = 0.0;
+  }
+  
+  m_motor->Set(ctre::phoenix::motorcontrol::ControlMode::PercentOutput, m_speed); 
+
+
+}
 
 void Robot::DisabledInit() {}
 
