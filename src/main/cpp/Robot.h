@@ -29,4 +29,9 @@ class Robot : public frc::TimedRobot {
   const std::string kAutoNameDefault = "Default";
   const std::string kAutoNameCustom = "My Auto";
   std::string m_autoSelected;
+  int m_InitCounter = 1;
+  int m_PeriCounter = 1;
+  int m_TeleInitCounter = 1;
+  int m_TelePeriCounter = 1;
+  double m_speed = 0.0;
 };

@@ -3,14 +3,18 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include "Robot.h"
-
+#include <iostream>
 #include <fmt/core.h>
 #include <frc/smartdashboard/SmartDashboard.h>
+
 
 void Robot::RobotInit() {
   m_chooser.SetDefaultOption(kAutoNameDefault, kAutoNameDefault);
   m_chooser.AddOption(kAutoNameCustom, kAutoNameCustom);
   frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
+
+  std::cout << "Robot Init" << std::to_string(m_InitCounter) << std::endl;
+  m_InitCounter++;
 }
 
 /**
@@ -21,7 +25,10 @@ void Robot::RobotInit() {
  * <p> This runs after the mode specific periodic functions, but before
  * LiveWindow and SmartDashboard integrated updating.
  */
-void Robot::RobotPeriodic() {}
+void Robot::RobotPeriodic() {
+  std::cout << "Robot Periodic" << std::to_string(m_PeriCounter) << std::endl;
+  m_PeriCounter++;
+}
 
 /**
  * This autonomous (along with the chooser code above) shows how to select
@@ -55,9 +62,15 @@ void Robot::AutonomousPeriodic() {
   }
 }
 
-void Robot::TeleopInit() {}
+void Robot::TeleopInit() {
+  std::cout << "Robot Teleop Init" << std::to_string(m_TeleInitCounter) << std::endl;
+  m_TeleInitCounter++;
+}
 
-void Robot::TeleopPeriodic() {}
+void Robot::TeleopPeriodic() {
+  std::cout << "Robot Teleop Periodic" << std::to_string(m_TelePeriCounter) << std::endl;
+  m_TelePeriCounter++;
+}
 
 void Robot::DisabledInit() {}
 
