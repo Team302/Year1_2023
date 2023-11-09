@@ -9,6 +9,9 @@
 #include <frc/TimedRobot.h>
 #include <frc/smartdashboard/SendableChooser.h>
 
+#include <ctre/phoenix/motorcontrol/can/TalonFX.h>
+using namespace ctre::phoenix::motorcontrol::can;
+
 class Robot : public frc::TimedRobot {
  public:
   void RobotInit() override;
@@ -23,13 +26,24 @@ class Robot : public frc::TimedRobot {
   void TestPeriodic() override;
   void SimulationInit() override;
   void SimulationPeriodic() override;
+  void MoveAllMotors();
 
  private:
   frc::SendableChooser<std::string> m_chooser;
   const std::string kAutoNameDefault = "Default";
   const std::string kAutoNameCustom = "My Auto";
   std::string m_autoSelected;
+  TalonFX* m_motor;
+  TalonFX* m_motor2;
+  TalonFX* m_motor3;
+  TalonFX* m_motor4;
 
-  int m_robotInitCounter = 1;
-  int m_robotPeriodicCounter = 1;
+  double m_speed = 0.0;
+  int m_counter = 0;
+  double m_speed2 = 0.0;
+  int m_counter2 = 0;
+  double m_speed3 = 0.0;
+  int m_counter3 = 0;
+  double m_speed4 = 0.0;
+  int m_counter4 = 0;
 };
