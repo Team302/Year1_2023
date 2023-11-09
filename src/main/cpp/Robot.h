@@ -34,7 +34,11 @@ class Robot : public frc::TimedRobot {
   const std::string kAutoNameCustom = "My Auto";
   std::string m_autoSelected;
 
-  TalonFX* m_motor;
+  TalonFX* m_motor1;
+  TalonFX* m_motor2;
+  TalonFX* m_motor3;
+  TalonFX* m_motor4;
+  
   double m_speed = 0.0;
   int m_counter = 0;
 };
