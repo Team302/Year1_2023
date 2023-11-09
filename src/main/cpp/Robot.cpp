@@ -6,6 +6,10 @@
 
 #include <iostream>
 
+#include <ctre/phoenix/motorcontrol/can/TalonFX.h>
+
+using namespace ctre::phoenix::motorcontrol::can;
+
 #include <fmt/core.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 
@@ -13,8 +17,11 @@ void Robot::RobotInit() {
   m_chooser.SetDefaultOption(kAutoNameDefault, kAutoNameDefault);
   m_chooser.AddOption(kAutoNameCustom, kAutoNameCustom);
   frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
+  m_motor1 = new TalonFX(2, "roborio");
+  m_motor3 = new TalonFX(2, "roborio");
+  m_motor13 = new TalonFX(2, "roborio");
+  m_motor15 = new TalonFX(2, "roborio");
 
-  m_motor = new TalonFX(2, "roborio");
 }
 
 /**
@@ -25,8 +32,7 @@ void Robot::RobotInit() {
  * <p> This runs after the mode specific periodic functions, but before
  * LiveWindow and SmartDashboard integrated updating.
  */
-void Robot::RobotPeriodic() {
-}
+void Robot::RobotPeriodic() {}
 
 /**
  * This autonomous (along with the chooser code above) shows how to select
@@ -72,7 +78,10 @@ void Robot::TeleopPeriodic() {
     m_speed = 0.0;
   }
 
-  m_motor->Set(ctre::phoenix::motorcontrol::ControlMode::PercentOutput, m_speed);
+  m_motor1->Set(ctre::phoenix::motorcontrol::ControlMode::PercentOutput, m_speed);
+  m_motor3->Set(ctre::phoenix::motorcontrol::ControlMode::PercentOutput, m_speed);
+  m_motor13->Set(ctre::phoenix::motorcontrol::ControlMode::PercentOutput, m_speed);
+  m_motor15->Set(ctre::phoenix::motorcontrol::ControlMode::PercentOutput, m_speed);
 }
 
 void Robot::DisabledInit() {}
