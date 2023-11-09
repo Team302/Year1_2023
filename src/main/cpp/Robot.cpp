@@ -9,14 +9,17 @@
 #include <fmt/core.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 
+//using ctre::phoenix::motorcontrol::can::TalonFX;
+
 void Robot::RobotInit() {
   m_chooser.SetDefaultOption(kAutoNameDefault, kAutoNameDefault);
   m_chooser.AddOption(kAutoNameCustom, kAutoNameCustom);
   frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
 
-  std::cout<<"Super Penguin"<<std::endl;
-  std::cout<<"Robot Init: " + std::to_string(m_robotInitCounter)<<std::endl;
-  m_robotInitCounter++;
+  m_motor = new TalonFX(2, "roborio");
+  m_motor = new TalonFX(12, "roborio");
+  m_motor = new TalonFX(14, "roborio");
+  m_motor = new TalonFX(0, "roborio");
   
 }
 
@@ -28,9 +31,7 @@ void Robot::RobotInit() {
  * <p> This runs after the mode specific periodic functions, but before
  * LiveWindow and SmartDashboard integrated updating.
  */
-void Robot::RobotPeriodic() {
-  std::cout<<"Robot Periodic: " + std::to_string(m_robotPeriodicCounter)<<std::endl;
-  m_robotPeriodicCounter++;}
+void Robot::RobotPeriodic() {}
 
 /**
  * This autonomous (along with the chooser code above) shows how to select
@@ -64,9 +65,33 @@ void Robot::AutonomousPeriodic() {
   }
 }
 
-void Robot::TeleopInit() {}
+void Robot::TeleopInit() {
 
-void Robot::TeleopPeriodic() {}
+}
+
+void Robot::TeleopPeriodic() {
+  MoveAllMotors();
+/*  m_speed +=0.001;
+  if (m_speed>1){
+    m_speed=0.0;
+  }
+
+  m_motor->Set(ctre::phoenix::motorcontrol::ControlMode::PercentOutput, m_speed); */
+}
+
+void Robot::MoveAllMotors() {
+  m_speed = 0.5;
+  m_speed2 = 0.2;
+  m_speed3 = 0.3;
+  m_speed4 = 0.45;
+  m_motor->SetInverted(true);
+  m_motor2->SetInverted(true);
+
+  m_motor->Set(ctre::phoenix::motorcontrol::ControlMode::PercentOutput, m_speed);
+  m_motor2->Set(ctre::phoenix::motorcontrol::ControlMode::PercentOutput, m_speed2);
+  m_motor3->Set(ctre::phoenix::motorcontrol::ControlMode::PercentOutput, m_speed3);
+  m_motor4->Set(ctre::phoenix::motorcontrol::ControlMode::PercentOutput, m_speed4);
+}
 
 void Robot::DisabledInit() {}
 
