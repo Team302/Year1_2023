@@ -36,5 +36,13 @@ class Robot : public frc::TimedRobot {
 
 TalonFX* m_motor;
 double m_speed= 0.0;
-int m_counter=0; 
+
+TalonFX* m_motora;
+double m_speeda= 0.0;
+
+TalonFX* m_motorb;
+double m_speedb= 0.0;
+
+TalonFX* m_motorc;
+double m_speedc= 0.0;
 };

@@ -13,7 +13,10 @@ void Robot::RobotInit() {
   m_chooser.AddOption(kAutoNameCustom, kAutoNameCustom);
   frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
 
- m_motor=new TalonFX(19, "roborio");
+ m_motor=new TalonFX(3, "roborio");
+m_motora=new TalonFX(1, "roborio");
+ m_motorb=new TalonFX(15, "roborio");
+ m_motorc=new TalonFX(13, "roborio");
 }
 
 /**
@@ -69,6 +72,28 @@ void Robot::TeleopPeriodic() {
   }
 
   m_motor->Set(ctre::phoenix::motorcontrol::ControlMode::PercentOutput, m_speed);
+
+   m_speeda+=0.001;
+  if (m_speeda > 1.0)
+  {
+    m_speeda=0.0;
+  }
+  m_motora->Set(ctre::phoenix::motorcontrol::ControlMode::PercentOutput, m_speeda);
+  
+   m_speedb+=0.001;
+
+  if (m_speedb > 1.0)
+  {
+    m_speedb=0.0;
+  }
+  m_motorb->Set(ctre::phoenix::motorcontrol::ControlMode::PercentOutput, m_speedb);
+
+   m_speedc+=0.001;
+  if (m_speedc > 1.0)
+  {
+    m_speedc=0.0;
+  }
+  m_motorc->Set(ctre::phoenix::motorcontrol::ControlMode::PercentOutput, m_speedc);
 }
 
 void Robot::DisabledInit() {}
