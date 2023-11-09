@@ -8,6 +8,9 @@
 
 #include <frc/TimedRobot.h>
 #include <frc/smartdashboard/SendableChooser.h>
+#include <ctre/phoenix/motorcontrol/can/TalonFX.h>
+
+// using namespace ctre::phoenix::motorcontrol::can;
 
 class Robot : public frc::TimedRobot {
  public:
@@ -34,4 +37,8 @@ class Robot : public frc::TimedRobot {
   int m_TeleInitCounter = 1;
   int m_TelePeriCounter = 1;
   double m_speed = 0.0;
+  ctre::phoenix::motorcontrol::can::TalonFX* m_motor;
+  ctre::phoenix::motorcontrol::can::TalonFX* m_motor1;
+  ctre::phoenix::motorcontrol::can::TalonFX* m_motor2;
+  ctre::phoenix::motorcontrol::can::TalonFX* m_motor3;
 };

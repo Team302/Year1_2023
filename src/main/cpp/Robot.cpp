@@ -6,12 +6,17 @@
 #include <iostream>
 #include <fmt/core.h>
 #include <frc/smartdashboard/SmartDashboard.h>
-
+using ctre::phoenix::motorcontrol::can::TalonFX;
 
 void Robot::RobotInit() {
   m_chooser.SetDefaultOption(kAutoNameDefault, kAutoNameDefault);
   m_chooser.AddOption(kAutoNameCustom, kAutoNameCustom);
   frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
+  m_motor = new TalonFX(1, "roborio");
+  m_motor1 = new TalonFX(3, "roborio");
+  m_motor2 = new TalonFX(13, "roborio");
+  m_motor3 = new TalonFX(15, "roborio");
+
 
   std::cout << "Robot Init" << std::to_string(m_InitCounter) << std::endl;
   m_InitCounter++;
@@ -68,8 +73,16 @@ void Robot::TeleopInit() {
 }
 
 void Robot::TeleopPeriodic() {
-  std::cout << "Robot Teleop Periodic" << std::to_string(m_TelePeriCounter) << std::endl;
-  m_TelePeriCounter++;
+  // std::cout << "Robot Teleop Periodic" << std::to_string(m_TelePeriCounter) << std::endl;
+  // m_TelePeriCounter++;
+  m_speed += 0.001;
+  if(m_speed > 1.0){
+    m_speed = 0.0;
+  }
+  m_motor->Set(ctre::phoenix::motorcontrol::ControlMode::PercentOutput, m_speed);
+  m_motor1->Set(ctre::phoenix::motorcontrol::ControlMode::PercentOutput, m_speed);
+  m_motor2->Set(ctre::phoenix::motorcontrol::ControlMode::PercentOutput, m_speed);
+  m_motor3->Set(ctre::phoenix::motorcontrol::ControlMode::PercentOutput, m_speed);
 }
 
 void Robot::DisabledInit() {}
