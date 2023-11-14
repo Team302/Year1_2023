@@ -5,11 +5,9 @@
 #include "Robot.h"
 
 #include <iostream>
-
 #include <ctre/phoenix/motorcontrol/can/TalonFX.h>
 
 using namespace ctre::phoenix::motorcontrol::can;
-
 #include <fmt/core.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 
@@ -18,9 +16,13 @@ void Robot::RobotInit() {
   m_chooser.AddOption(kAutoNameCustom, kAutoNameCustom);
   frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
   m_motor1 = new TalonFX(2, "roborio");
+  m_motor1->SetNeutralMode(ctre::phoenix::motorcontrol::NeutralMode::Brake);
   m_motor3 = new TalonFX(2, "roborio");
+  m_motor3->SetNeutralMode(ctre::phoenix::motorcontrol::NeutralMode::Brake);
   m_motor13 = new TalonFX(2, "roborio");
+  m_motor13->SetNeutralMode(ctre::phoenix::motorcontrol::NeutralMode::Brake);
   m_motor15 = new TalonFX(2, "roborio");
+  m_motor15->SetNeutralMode(ctre::phoenix::motorcontrol::NeutralMode::Brake);
 
 }
 
