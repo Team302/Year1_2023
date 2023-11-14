@@ -112,7 +112,7 @@ void Robot::MoveAllMotors() {
   double encoderCounts2 = m_motor2->GetSelectedSensorPosition();
   double cancoderDegreeAbsolute = m_cancoder2->GetAbsolutePosition();
 
-  if (std::abs(cancoderDegreeAbsolute - 136) < 6.0){ //the 4 is so it can be 5 greater or 5 less than target
+  if (std::abs(cancoderDegreeAbsolute - 136) < 4.0){ //the 4 is so it can be 5 greater or 5 less than target
     m_speed2*=-1;
   }
 }
