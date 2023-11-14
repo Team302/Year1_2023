@@ -13,10 +13,28 @@ void Robot::RobotInit() {
   m_chooser.AddOption(kAutoNameCustom, kAutoNameCustom);
   frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
 
- m_motor=new TalonFX(3, "roborio");
-m_motora=new TalonFX(1, "roborio");
+ m_motor=new TalonFX(12, "roborio");
+m_motora=new TalonFX(2, "roborio");
  m_motorb=new TalonFX(15, "roborio");
- m_motorc=new TalonFX(13, "roborio");
+ m_motorc=new TalonFX(0, "roborio");
+
+ /* m_motor=new TalonFX(1, "roborio");
+m_motora=new TalonFX(18, "roborio");
+ m_motorb=new TalonFX(0, "roborio");
+ m_motorc=new TalonFX(7, "roborio");
+*/
+
+
+
+m_motor->SetNeutralMode(ctre::phoenix::motorcontrol::NeutralMode::Brake); 
+m_motora->SetNeutralMode(ctre::phoenix::motorcontrol::NeutralMode::Brake); 
+m_motorb->SetNeutralMode(ctre::phoenix::motorcontrol::NeutralMode::Brake); 
+m_motorc->SetNeutralMode(ctre::phoenix::motorcontrol::NeutralMode::Brake); 
+
+double encoderCounts = m_motor->GetSelectedSensorPosition();
+
+m_cancoder=new ctre::phoenix::sensors::CANCoder(2,"roborio");
+
 }
 
 /**
@@ -65,35 +83,47 @@ void Robot::AutonomousPeriodic() {
 void Robot::TeleopInit() {}
 
 void Robot::TeleopPeriodic() {
-  m_speed+=0.001;
+
+/*std::cout<<"Encoder Counts (Relative): "<<std::to_string(m_motor->GetSensorCollection().GetIntegratedSensorPosition()) << std::endl;
+std::cout<<"Encoder Counts (Absolute): "<<std::to_string(m_motor->GetSensorCollection().GetIntegratedSensorAbsolutePosition()) << std::endl;*/
+
+double position=m_cancoder->GetAbsolutePosition();
+  m_motor->Set(ctre::phoenix::motorcontrol::ControlMode::PercentOutput, m_speed);
+  m_motora->Set(ctre::phoenix::motorcontrol::ControlMode::PercentOutput, m_speed);
+  m_motorb->Set(ctre::phoenix::motorcontrol::ControlMode::PercentOutput, m_speed);
+  m_motorc->Set(ctre::phoenix::motorcontrol::ControlMode::PercentOutput, m_speed);
+
+ if (std::abs(position) < 5.0)
+{
+  m_speed=m_speed*-1;
+}
+
+
+  /*m_speed+=0.001;
   if (m_speed > 1.0)
   {
     m_speed=0.0;
-  }
+  }*/
 
-  m_motor->Set(ctre::phoenix::motorcontrol::ControlMode::PercentOutput, m_speed);
 
-   m_speeda+=0.001;
+   /*m_speeda+=0.001;
   if (m_speeda > 1.0)
   {
     m_speeda=0.0;
-  }
-  m_motora->Set(ctre::phoenix::motorcontrol::ControlMode::PercentOutput, m_speeda);
+  }*/
   
-   m_speedb+=0.001;
 
-  if (m_speedb > 1.0)
+  /*if (m_speedb > 1.0)
   {
     m_speedb=0.0;
-  }
-  m_motorb->Set(ctre::phoenix::motorcontrol::ControlMode::PercentOutput, m_speedb);
-
+  }*/
+/*
    m_speedc+=0.001;
   if (m_speedc > 1.0)
   {
     m_speedc=0.0;
-  }
-  m_motorc->Set(ctre::phoenix::motorcontrol::ControlMode::PercentOutput, m_speedc);
+  }*/
+
 }
 
 void Robot::DisabledInit() {}
