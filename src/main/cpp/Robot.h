@@ -39,11 +39,12 @@ class Robot : public frc::TimedRobot {
   TalonFX* m_motor4;
 
   double m_speed = 0.0;
-  int m_counter = 0;
-  double m_speed2 = 0.0;
+  double m_speed2 = 0.1;
   int m_counter2 = 0;
   double m_speed3 = 0.0;
   int m_counter3 = 0;
   double m_speed4 = 0.0;
   int m_counter4 = 0;
+
+  ctre::phoenix::sensors::CANCoder* m_cancoder2;
 };
