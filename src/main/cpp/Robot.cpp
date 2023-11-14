@@ -14,11 +14,29 @@ void Robot::RobotInit() {
   m_chooser.AddOption(kAutoNameCustom, kAutoNameCustom);
   frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
 
+
+  
+
   m_motor1 = new TalonFX(3, "roborio");
   m_motor2 = new TalonFX(13, "roborio");
-  m_motor3 = new TalonFX(15, "roborio");
-  m_motor4 = new TalonFX(1, "roborio");
-  // m_motor2 = new TalonFx(12 14 0)
+  m_motor3 = new TalonFX(15, "roborio"); //set to be inverted
+  m_motor4 = new TalonFX(1, "roborio");//set to be inverted
+  //1 18 7 0 drive motors for robot 3
+
+  m_motor5 = new TalonFX(0, "roborio");
+
+  m_motor3->SetInverted(true);
+  m_motor4->SetInverted(true);
+  m_motor1->SetNeutralMode(ctre::phoenix::motorcontrol::NeutralMode::Brake);
+  m_motor2->SetNeutralMode(ctre::phoenix::motorcontrol::NeutralMode::Brake);
+  m_motor3->SetNeutralMode(ctre::phoenix::motorcontrol::NeutralMode::Brake);
+  m_motor4->SetNeutralMode(ctre::phoenix::motorcontrol::NeutralMode::Brake);
+
+  m_motor5->SetNeutralMode(ctre::phoenix::motorcontrol::NeutralMode::Brake);
+
+  double encoderCounts = m_motor1->GetSelectedSensorPosition();
+
+  m_cancoder = new ctre::phoenix::sensors::CANCoder(0, "roborio"); //can coder 0 represents motor 0
 
 }
 
@@ -70,17 +88,36 @@ void Robot::TeleopInit() {
 }
 
 void Robot::TeleopPeriodic() {
+
+  
+
+
+  double absoluteDeg = std::abs(m_cancoder->GetPosition());
+
+  if (absoluteDeg < 40)
+  {
+     m_motor5->Set(ctre::phoenix::motorcontrol::ControlMode::PercentOutput, 0.07);
+  }
+  
+
+  /*
   m_speed += 0.001;
 
-  if (m_speed > 1.0)
+  if (m_speed > 0.3)
   {
     m_speed = 0.0;
   }
+  
+  
+
 
   m_motor1->Set(ctre::phoenix::motorcontrol::ControlMode::PercentOutput, m_speed);
   m_motor2->Set(ctre::phoenix::motorcontrol::ControlMode::PercentOutput, m_speed);
   m_motor3->Set(ctre::phoenix::motorcontrol::ControlMode::PercentOutput, m_speed);
   m_motor4->Set(ctre::phoenix::motorcontrol::ControlMode::PercentOutput, m_speed);
+  std::cout << "SelectedSensorPosition: " << std::to_string(m_cancoder->GetPosition()) <<std::endl;
+  std::cout << "IntegratedSensorAbsolute: " << std::to_string(m_cancoder->GetAbsolutePosition()) <<std::endl;
+  */
 }
 
 void Robot::DisabledInit() {}

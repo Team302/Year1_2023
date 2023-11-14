@@ -10,6 +10,7 @@
 #include <frc/smartdashboard/SendableChooser.h>
 
 #include <ctre/phoenix/motorcontrol/can/TalonFX.h>
+#include <ctre/phoenix/sensors/CANCoder.h>
 
 using namespace ctre::phoenix::motorcontrol::can;
 
@@ -38,7 +39,14 @@ class Robot : public frc::TimedRobot {
   TalonFX* m_motor2;
   TalonFX* m_motor3;
   TalonFX* m_motor4;
+
+  TalonFX* m_motor5;
   
   double m_speed = 0.0;
   int m_counter = 0;
+
+  ctre::phoenix::sensors::CANCoder* m_cancoder;
+
+
+
 };
