@@ -9,12 +9,32 @@
 #include <fmt/core.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 
-void Robot::RobotInit() {
+void Robot::RobotInit()
+{
   m_chooser.SetDefaultOption(kAutoNameDefault, kAutoNameDefault);
   m_chooser.AddOption(kAutoNameCustom, kAutoNameCustom);
   frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
 
-  m_motor = new TalonFX(2, "roborio");
+  robotnumber = 4;
+
+  if (robotnumber == 4)
+  {
+    m_motor1 = new TalonFX(1, "roborio");
+    m_motor2 = new TalonFX(3, "roborio");
+    m_motor3 = new TalonFX(13, "roborio");
+    m_motor4 = new TalonFX(15, "roborio");
+  }
+  else if (robotnumber ==3)
+  {
+    m_motor1 = new TalonFX(1, "roborio");
+    m_motor2 = new TalonFX(3, "roborio");
+    m_motor3 = new TalonFX(13, "roborio");
+    m_motor4 = new TalonFX(15, "roborio");
+  }
+  m_motor1->SetNeutralMode(ctre::phoenix::motorcontrol::NeutralMode::Brake);
+    m_motor1->SetInverted(ctre::phoenix::motorcontrol::InvertType::InvertMotorOutput);
+    double encodercounts = m_motor1->GetSelectedSensorPosition();
+  
 }
 
 /**
@@ -25,7 +45,8 @@ void Robot::RobotInit() {
  * <p> This runs after the mode specific periodic functions, but before
  * LiveWindow and SmartDashboard integrated updating.
  */
-void Robot::RobotPeriodic() {
+void Robot::RobotPeriodic()
+{
 }
 
 /**
@@ -39,32 +60,41 @@ void Robot::RobotPeriodic() {
  * if-else structure below with additional strings. If using the SendableChooser
  * make sure to add them to the chooser code above as well.
  */
-void Robot::AutonomousInit() {
+void Robot::AutonomousInit()
+{
   m_autoSelected = m_chooser.GetSelected();
   // m_autoSelected = SmartDashboard::GetString("Auto Selector",
   //     kAutoNameDefault);
   fmt::print("Auto selected: {}\n", m_autoSelected);
 
-  if (m_autoSelected == kAutoNameCustom) {
+  if (m_autoSelected == kAutoNameCustom)
+  {
     // Custom Auto goes here
-  } else {
+  }
+  else
+  {
     // Default Auto goes here
   }
 }
 
-void Robot::AutonomousPeriodic() {
-  if (m_autoSelected == kAutoNameCustom) {
+void Robot::AutonomousPeriodic()
+{
+  if (m_autoSelected == kAutoNameCustom)
+  {
     // Custom Auto goes here
-  } else {
+  }
+  else
+  {
     // Default Auto goes here
   }
 }
 
-void Robot::TeleopInit() {
-  
+void Robot::TeleopInit()
+{
 }
 
-void Robot::TeleopPeriodic() {
+void Robot::TeleopPeriodic()
+{
   m_speed += 0.001;
 
   if (m_speed > 1.0)
@@ -72,7 +102,7 @@ void Robot::TeleopPeriodic() {
     m_speed = 0.0;
   }
 
-  m_motor->Set(ctre::phoenix::motorcontrol::ControlMode::PercentOutput, m_speed);
+  m_motor1->Set(ctre::phoenix::motorcontrol::ControlMode::PercentOutput, m_speed);
 }
 
 void Robot::DisabledInit() {}
@@ -88,7 +118,8 @@ void Robot::SimulationInit() {}
 void Robot::SimulationPeriodic() {}
 
 #ifndef RUNNING_FRC_TESTS
-int main() {
+int main()
+{
   return frc::StartRobot<Robot>();
 }
 #endif
